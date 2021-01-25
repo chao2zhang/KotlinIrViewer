@@ -2,14 +2,14 @@ package io.github.chao2zhang
 
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
-import org.jetbrains.kotlin.com.intellij.mock.MockProject
-import org.jetbrains.kotlin.compiler.plugin.ComponentRegistrar
-import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
+import org.jetbrains.kotlin.ir.util.DumpIrTreeVisitor
 
-class KivIrGenerationExtension : IrGenerationExtension {
+class KivIrGenerationExtension(private val output: Appendable) : IrGenerationExtension {
 
     override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
-        moduleFragment.transform(KivTransformer(), null)
+        moduleFragment.files.forEach {
+            it.accept(DumpIrTreeVisitor(output, false), "")
+        }
     }
 }

@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 class KivComponentRegistrar : ComponentRegistrar {
 
     override fun registerProjectComponents(project: MockProject, configuration: CompilerConfiguration) {
-        IrGenerationExtension.registerExtension(project, KivIrGenerationExtension())
+        val output = System.out
+        IrGenerationExtension.registerExtension(project, KivIrGenerationExtension(output))
     }
 }
